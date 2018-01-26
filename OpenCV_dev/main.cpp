@@ -10,7 +10,7 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/core/core.hpp>
-
+#include "global.hpp"
 
 using namespace std;
 using namespace cv;
@@ -35,26 +35,7 @@ static void OpenClose_process();
 static void ErodeDilate_process();
 static void TopBlackHat_process();
 
-int g_nContrastValue;
-int g_nBrightnessValue;
-int g_nBoxfilter;
-int g_nBlurfilter;
-int g_nGaussianFilter;
-int g_nMedianFilter;
-int g_nBilateralFilter;
-int g_Switch;
-int g_nElementSize;
-int g_nErodeDilate, g_nOpenClose, g_nTopBlackHat;
-int g_SwitchOpenClose, g_SwitchTopBlackHat, g_SwitchErodeDilate;
-int g_nElementType;
-
 Mat g_srcImage, g_dstImage;
-Mat g_boxfilter_image;
-Mat g_blurfilter_image;
-Mat g_gaussian_image;
-Mat g_median_image;
-Mat g_bilateral_image;
-Mat g_Morphology_image;
 
 int main(){
     
@@ -97,15 +78,8 @@ int main(){
     //
     
     
-    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/yyf.jpg");
+    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/dota2.jpg");
     
-//    g_boxfilter_image = g_srcImage.clone();
-//    g_blurfilter_image = g_srcImage.clone();
-//    g_gaussian_image = g_srcImage.clone();
-//    g_median_image = g_srcImage.clone();
-//    g_bilateral_image = g_srcImage.clone();
-//    g_Morphology_image = g_srcImage.clone();
-//
 //    namedWindow("BoxFilter");
 //    namedWindow("BlurFilter");
 //    namedWindow("GaussianFilter");
@@ -145,6 +119,18 @@ int main(){
     on_SwitchOpenClose(g_SwitchOpenClose, 0);
     on_SwitchTopBlackHat(g_SwitchTopBlackHat, 0);
     
+    // Canny
+    Mat cannytest = g_srcImage;
+    Mat dst, gray, edge;
+    dst.create(g_srcImage.size(), g_srcImage.type());
+    cvtColor(g_srcImage, gray, CV_BGR2GRAY);
+    blur(gray, edge, Size(3,3));
+    Canny(edge, edge, 3, 9);
+    dst = Scalar::all(0);
+    g_srcImage.copyTo(dst, edge);
+    imshow("Canny2", dst);
+    Canny(g_srcImage, cannytest, 80, 150);
+    imshow("Canny", cannytest);
 //    cout<<"Press Q to quit."<<endl;
 //    while(char(waitKey(1))!='q'){}
     
@@ -185,28 +171,28 @@ static void ContrastAndBrightness(int, void *){
 }
 
 static void on_BoxFilter(int, void*){
-    boxFilter(g_srcImage, g_boxfilter_image, -1, Size(g_nBoxfilter+1,g_nBoxfilter+1));
-    imshow("BoxFilter", g_boxfilter_image);
+    boxFilter(g_srcImage, g_dstImage, -1, Size(g_nBoxfilter+1,g_nBoxfilter+1));
+    imshow("BoxFilter", g_dstImage);
 }
 
 static void on_BlurFilter(int, void*){
-    blur(g_srcImage, g_blurfilter_image, Size(g_nBlurfilter+1,g_nBlurfilter+1));
-    imshow("BlurFilter", g_blurfilter_image);
+    blur(g_srcImage, g_dstImage, Size(g_nBlurfilter+1,g_nBlurfilter+1));
+    imshow("BlurFilter", g_dstImage);
 }
 
 static void on_GaussianFilter(int, void*){
-    GaussianBlur(g_srcImage, g_gaussian_image, Size(g_nGaussianFilter*2+1,g_nGaussianFilter*2+1), 0,0);
-    imshow("GaussianFilter", g_gaussian_image);
+    GaussianBlur(g_srcImage, g_dstImage, Size(g_nGaussianFilter*2+1,g_nGaussianFilter*2+1), 0,0);
+    imshow("GaussianFilter", g_dstImage);
 }
 
 static void on_MedianFilter(int, void*){
-    medianBlur(g_srcImage, g_median_image, g_nMedianFilter*2+1);
-    imshow("MedianFilter", g_median_image);
+    medianBlur(g_srcImage, g_dstImage, g_nMedianFilter*2+1);
+    imshow("MedianFilter", g_dstImage);
 }
 
 static void on_BilateralFilter(int, void*){
-    bilateralFilter(g_srcImage, g_bilateral_image, g_nBilateralFilter, g_nBilateralFilter*2, g_nBilateralFilter/2);
-    imshow("BilateralFilter", g_bilateral_image);
+    bilateralFilter(g_srcImage, g_dstImage, g_nBilateralFilter, g_nBilateralFilter*2, g_nBilateralFilter/2);
+    imshow("BilateralFilter", g_dstImage);
 }
 
 static void on_SwitchMorphology(int, void*){
@@ -220,12 +206,12 @@ static void on_ElementSize(int, void*){
 static void Process(){
     Mat element = getStructuringElement(MORPH_RECT, Size(2*g_nElementSize+1,2*g_nElementSize+1), Point(g_nElementSize, g_nElementSize));
     if(g_Switch==0){
-        erode(g_srcImage, g_Morphology_image, element);
+        erode(g_srcImage, g_dstImage, element);
     }
     else{
-        dilate(g_srcImage, g_Morphology_image, element);
+        dilate(g_srcImage, g_dstImage, element);
     }
-    imshow("Morphology", g_Morphology_image);
+    imshow("Morphology", g_dstImage);
 }
 
 static void on_OpenClose(int, void*){
