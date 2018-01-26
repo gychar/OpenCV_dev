@@ -30,4 +30,6 @@ extern int g_nErodeDilate, g_nOpenClose, g_nTopBlackHat;
 extern int g_SwitchOpenClose, g_SwitchTopBlackHat, g_SwitchErodeDilate;
 extern int g_nElementType;
 
+extern Mat g_srcImage, g_dstImage;
+
 #endif /* global_hpp */

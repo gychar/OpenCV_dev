@@ -24,5 +24,4 @@ int g_SwitchOpenClose = 0;
 int g_SwitchTopBlackHat = 0;
 int g_SwitchErodeDilate = 0;
 int g_nElementType = 0;
-
-
+Mat g_srcImage, g_dstImage;
