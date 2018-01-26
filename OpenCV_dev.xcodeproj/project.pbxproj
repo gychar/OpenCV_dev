@@ -51,7 +51,7 @@
 		6AD3AE20201B68560031097C /* libopencv_structured_light.3.3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD3ADF6201B68550031097C /* libopencv_structured_light.3.3.0.dylib */; };
 		6AD3AE21201B68560031097C /* libopencv_core.3.3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD3ADF7201B68550031097C /* libopencv_core.3.3.0.dylib */; };
 		6AD3AE2E201BDB750031097C /* global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE2C201BDB750031097C /* global.cpp */; };
-		6AD3AE34201BE0830031097C /* EdgeDetection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE32201BE0830031097C /* EdgeDetection.cpp */; };
+		6AD3AE34201BE0830031097C /* Morphology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE32201BE0830031097C /* Morphology.cpp */; };
 		6AD3AE37201BE5430031097C /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE35201BE5430031097C /* Filter.cpp */; };
 /* End PBXBuildFile section */
 
@@ -114,8 +114,8 @@
 		6AD3ADF7201B68550031097C /* libopencv_core.3.3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_core.3.3.0.dylib; path = ../../../../../../usr/local/Cellar/opencv/3.3.0_3/lib/libopencv_core.3.3.0.dylib; sourceTree = "<group>"; };
 		6AD3AE2C201BDB750031097C /* global.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = global.cpp; sourceTree = "<group>"; };
 		6AD3AE2D201BDB750031097C /* global.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = global.hpp; sourceTree = "<group>"; };
-		6AD3AE32201BE0830031097C /* EdgeDetection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EdgeDetection.cpp; sourceTree = "<group>"; };
-		6AD3AE33201BE0830031097C /* EdgeDetection.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EdgeDetection.hpp; sourceTree = "<group>"; };
+		6AD3AE32201BE0830031097C /* Morphology.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Morphology.cpp; sourceTree = "<group>"; };
+		6AD3AE33201BE0830031097C /* Morphology.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Morphology.hpp; sourceTree = "<group>"; };
 		6AD3AE35201BE5430031097C /* Filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
 		6AD3AE36201BE5430031097C /* Filter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Filter.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,8 +196,8 @@
 				6AD3ADC6201B66EC0031097C /* main.cpp */,
 				6AD3AE35201BE5430031097C /* Filter.cpp */,
 				6AD3AE36201BE5430031097C /* Filter.hpp */,
-				6AD3AE32201BE0830031097C /* EdgeDetection.cpp */,
-				6AD3AE33201BE0830031097C /* EdgeDetection.hpp */,
+				6AD3AE32201BE0830031097C /* Morphology.cpp */,
+				6AD3AE33201BE0830031097C /* Morphology.hpp */,
 				6AD3AE2C201BDB750031097C /* global.cpp */,
 				6AD3AE2D201BDB750031097C /* global.hpp */,
 			);
@@ -312,7 +312,7 @@
 			files = (
 				6AD3AE2E201BDB750031097C /* global.cpp in Sources */,
 				6AD3AE37201BE5430031097C /* Filter.cpp in Sources */,
-				6AD3AE34201BE0830031097C /* EdgeDetection.cpp in Sources */,
+				6AD3AE34201BE0830031097C /* Morphology.cpp in Sources */,
 				6AD3ADC7201B66EC0031097C /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

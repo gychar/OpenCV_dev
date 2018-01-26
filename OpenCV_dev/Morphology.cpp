@@ -1,12 +1,12 @@
 //
-//  EdgeDetection.cpp
+//  Morphology.cpp
 //  OpenCV_dev
 //
 //  Created by CHAR on 2018/1/26.
 //  Copyright © 2018年 CHAR. All rights reserved.
 //
 
-#include "EdgeDetection.hpp"
+#include "Morphology.hpp"
 #include "global.hpp"
 
 void Affichage(){

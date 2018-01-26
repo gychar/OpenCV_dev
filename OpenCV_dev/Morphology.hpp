@@ -1,13 +1,13 @@
 //
-//  EdgeDetection.hpp
+//  Morphology.hpp
 //  OpenCV_dev
 //
 //  Created by CHAR on 2018/1/26.
 //  Copyright © 2018年 CHAR. All rights reserved.
 //
 
-#ifndef EdgeDetection_hpp
-#define EdgeDetection_hpp
+#ifndef Morphology_hpp
+#define Morphology_hpp
 
 #include <iostream>
 #include <opencv2/opencv.hpp>
@@ -29,4 +29,4 @@ extern void OpenClose_process();
 extern void ErodeDilate_process();
 extern void TopBlackHat_process();
 
-#endif /* EdgeDetection_hpp */
+#endif /* Morphology_hpp */
