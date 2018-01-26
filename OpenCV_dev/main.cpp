@@ -24,6 +24,16 @@ static void on_BilateralFilter(int, void*);
 static void on_SwitchMorphology(int, void*);
 static void on_ElementSize(int, void*);
 static void Process();
+static void Affichage();
+static void on_OpenClose(int, void*);
+static void on_TopBlackHat(int, void*);
+static void on_ErodeDilate(int, void*);
+static void on_SwitchOpenClose(int, void*);
+static void on_SwitchErodeDilate(int, void*);
+static void on_SwitchTopBlackHat(int, void*);
+static void OpenClose_process();
+static void ErodeDilate_process();
+static void TopBlackHat_process();
 
 int g_nContrastValue;
 int g_nBrightnessValue;
@@ -34,6 +44,9 @@ int g_nMedianFilter;
 int g_nBilateralFilter;
 int g_Switch;
 int g_nElementSize;
+int g_nErodeDilate, g_nOpenClose, g_nTopBlackHat;
+int g_SwitchOpenClose, g_SwitchTopBlackHat, g_SwitchErodeDilate;
+int g_nElementType;
 
 Mat g_srcImage, g_dstImage;
 Mat g_boxfilter_image;
@@ -86,46 +99,80 @@ int main(){
     
     g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/yyf.jpg");
     
-    g_boxfilter_image = g_srcImage.clone();
-    g_blurfilter_image = g_srcImage.clone();
-    g_gaussian_image = g_srcImage.clone();
-    g_median_image = g_srcImage.clone();
-    g_bilateral_image = g_srcImage.clone();
-    g_Morphology_image = g_srcImage.clone();
+//    g_boxfilter_image = g_srcImage.clone();
+//    g_blurfilter_image = g_srcImage.clone();
+//    g_gaussian_image = g_srcImage.clone();
+//    g_median_image = g_srcImage.clone();
+//    g_bilateral_image = g_srcImage.clone();
+//    g_Morphology_image = g_srcImage.clone();
+//
+//    namedWindow("BoxFilter");
+//    namedWindow("BlurFilter");
+//    namedWindow("GaussianFilter");
+//    namedWindow("MedianFilter");
+//    namedWindow("BilateralFilter");
+//    namedWindow("Morphology");
+//
+//    createTrackbar("Size", "BoxFilter", &g_nBoxfilter, 20, on_BoxFilter);
+//    createTrackbar("Size", "BlurFilter", &g_nBlurfilter, 20, on_BlurFilter);
+//    createTrackbar("Size", "GaussianFilter", &g_nGaussianFilter, 20, on_GaussianFilter);
+//    createTrackbar("Size", "MedianFilter", &g_nMedianFilter, 20, on_MedianFilter);
+//    createTrackbar("Size", "BilateralFilter", &g_nBilateralFilter, 20, on_BilateralFilter);
+//    createTrackbar("Switch Morphology", "Morphology", &g_Switch, 1, on_SwitchMorphology);
+//    createTrackbar("Size", "Morphology", &g_nElementSize, 20, on_ElementSize);
+//    on_BoxFilter(g_nBoxfilter, 0);
+//    on_BlurFilter(g_nBlurfilter,0);
+//    on_GaussianFilter(g_nGaussianFilter, 0);
+//    on_MedianFilter(g_nMedianFilter, 0);
+//    on_BilateralFilter(g_nBilateralFilter, 0);
+//    on_SwitchMorphology(g_Switch, 0);
+//    on_ElementSize(g_nElementSize, 0);
     
-    namedWindow("BoxFilter");
-    namedWindow("BlurFilter");
-    namedWindow("GaussianFilter");
-    namedWindow("MedianFilter");
-    namedWindow("BilateralFilter");
-    namedWindow("Morphology");
+    Affichage();
     
-    createTrackbar("Size", "BoxFilter", &g_nBoxfilter, 20, on_BoxFilter);
-    createTrackbar("Size", "BlurFilter", &g_nBlurfilter, 20, on_BlurFilter);
-    createTrackbar("Size", "GaussianFilter", &g_nGaussianFilter, 20, on_GaussianFilter);
-    createTrackbar("Size", "MedianFilter", &g_nMedianFilter, 20, on_MedianFilter);
-    createTrackbar("Size", "BilateralFilter", &g_nBilateralFilter, 20, on_BilateralFilter);
-    createTrackbar("Switch Morphology", "Morphology", &g_Switch, 1, on_SwitchMorphology);
-    createTrackbar("Size", "Morphology", &g_nElementSize, 20, on_ElementSize);
-    on_BoxFilter(g_nBoxfilter, 0);
-    on_BlurFilter(g_nBlurfilter,0);
-    on_GaussianFilter(g_nGaussianFilter, 0);
-    on_MedianFilter(g_nMedianFilter, 0);
-    on_BilateralFilter(g_nBilateralFilter, 0);
-    on_SwitchMorphology(g_Switch, 0);
-    on_ElementSize(g_nElementSize, 0);
+    namedWindow("Erode&Dilate");
+    namedWindow("Open&Close");
+    namedWindow("TopHat&BlackHat");
     
-    imshow("hehe",g_srcImage);
+    createTrackbar("Switch", "Erode&Dilate", &g_SwitchErodeDilate, 1, on_SwitchErodeDilate);
+    createTrackbar("Size", "Erode&Dilate", &g_nErodeDilate, 20, on_ErodeDilate);
+    createTrackbar("Switch", "Open&Close", &g_SwitchOpenClose, 1, on_SwitchOpenClose);
+    createTrackbar("Size", "Open&Close", &g_nOpenClose, 20, on_OpenClose);
+    createTrackbar("Switch", "TopHat&BlackHat", &g_SwitchTopBlackHat, 1, on_SwitchTopBlackHat);
+    createTrackbar("Size", "TopHat&BlackHat", &g_nTopBlackHat, 20, on_TopBlackHat);
+
+    on_SwitchErodeDilate(g_SwitchErodeDilate, 0);
+    on_SwitchOpenClose(g_SwitchOpenClose, 0);
+    on_SwitchTopBlackHat(g_SwitchTopBlackHat, 0);
     
-    cout<<"Press Q to quit."<<endl;
-    while(char(waitKey(1))!='q'){}
+//    cout<<"Press Q to quit."<<endl;
+//    while(char(waitKey(1))!='q'){}
+    
+    while(1){
+        int c;
+ 
+        on_ErodeDilate(g_nErodeDilate, 0);
+        on_OpenClose(g_nOpenClose, 0);
+        on_TopBlackHat(g_nTopBlackHat, 0);
+
+        c=waitKey(0);
+        if((char)c=='q'||(char)c==27)
+            break;
+        if((char)c=='r') // R
+            g_nElementType=MORPH_RECT;
+        else if((char)c=='e') // E
+            g_nElementType=MORPH_ELLIPSE;
+        else if((char)c=='c') // C
+            g_nElementType=MORPH_CROSS;
+    }
+
     return 0;
 }
 
 static void ContrastAndBrightness(int, void *){
-    
+
     namedWindow("Original Image",0);
-    
+
     for(int y=0;y<g_srcImage.rows;y++){
         for(int x=0;x<g_srcImage.cols;x++){
             for(int c=0;c<3;c++){
@@ -181,5 +228,63 @@ static void Process(){
     imshow("Morphology", g_Morphology_image);
 }
 
+static void on_OpenClose(int, void*){
+    OpenClose_process();
+}
 
+static void on_TopBlackHat(int, void*){
+    TopBlackHat_process();
+}
 
+static void on_ErodeDilate(int, void*){
+    ErodeDilate_process();
+}
+
+static void on_SwitchOpenClose(int, void*){
+    OpenClose_process();
+}
+
+static void on_SwitchErodeDilate(int, void*){
+    ErodeDilate_process();
+}
+
+static void on_SwitchTopBlackHat(int, void*){
+    TopBlackHat_process();
+}
+
+static void ErodeDilate_process(){
+    Mat element=getStructuringElement(g_nElementType, Size(2*g_nErodeDilate+1,2*g_nErodeDilate+1), Point(g_nErodeDilate,g_nErodeDilate));
+    if(g_SwitchErodeDilate==0){
+        morphologyEx(g_srcImage, g_dstImage, CV_MOP_ERODE, element);
+    }
+    else{
+        morphologyEx(g_srcImage, g_dstImage, CV_MOP_DILATE, element);
+    }
+    imshow("Erode&Dilate", g_dstImage);
+}
+
+static void OpenClose_process(){
+    Mat element=getStructuringElement(g_nElementType, Size(2*g_nOpenClose+1,2*g_nOpenClose+1), Point(g_nOpenClose,g_nOpenClose));
+    if(g_SwitchOpenClose==0){
+        morphologyEx(g_srcImage, g_dstImage, CV_MOP_OPEN, element);
+    }
+    else{
+        morphologyEx(g_srcImage, g_dstImage, CV_MOP_CLOSE, element);
+    }
+    imshow("Open&Close", g_dstImage);
+}
+
+static void TopBlackHat_process(){
+    Mat element=getStructuringElement(g_nElementType, Size(2*g_nTopBlackHat+1,2*g_nTopBlackHat+1), Point(g_nTopBlackHat,g_nTopBlackHat));
+    if(g_SwitchTopBlackHat==0){
+        morphologyEx(g_srcImage, g_dstImage, CV_MOP_TOPHAT, element);
+    }
+    else{
+        morphologyEx(g_srcImage, g_dstImage, CV_MOP_BLACKHAT, element);
+    }
+    imshow("TopHat&BlackHat", g_dstImage);
+}
+
+static void Affichage(){
+    cout<<"ESC/Q to exit"<<endl<<"R for Rectangle element"<<endl<<"E for Elliptic element"<<endl<<"C for Cross-shaped element"<<endl;
+}
