@@ -115,7 +115,7 @@ int main(){
     on_SwitchMorphology(g_Switch, 0);
     on_ElementSize(g_nElementSize, 0);
     
-    imshow("haha",g_srcImage);
+    imshow("hehe",g_srcImage);
     
     cout<<"Press Q to quit."<<endl;
     while(char(waitKey(1))!='q'){}
