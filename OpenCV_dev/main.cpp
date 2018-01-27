@@ -14,13 +14,14 @@
 #include "Filter.hpp"
 #include "Morphology.hpp"
 #include "Pyramide.hpp"
+#include "Hough.hpp"
 
 using namespace std;
 using namespace cv;
 
 int main(){
     
-    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/yyf.jpg");
+    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/china.jpg");
     g_dstImage=Mat::zeros(g_srcImage.size(), g_srcImage.type());
     
     /*    import image
@@ -50,8 +51,6 @@ int main(){
     */
     
     /* Contrast & Brightness
-    g_nContrastValue=80;
-    g_nBrightnessValue=80;
      
     namedWindow("Modified Image",0);
     createTrackbar("Contrast", "Modified Image", &g_nContrastValue, 300,ContrastAndBrightness);
@@ -172,7 +171,7 @@ int main(){
      }
     */
     
-    // Pyramide
+    /* Pyramide
     Affichage_Pyramide();
     Mat temp_image = g_srcImage;
     while(1){
@@ -205,6 +204,44 @@ int main(){
         }
         imshow("Zoom", temp_image);
     }
+    */
 
+    /* Hough transform
+    // Hough Line
+    namedWindow("HoughLines");
+    createTrackbar("Value", "HoughLines", &g_nthreshold, 200, on_HoughLines);
+    
+    Canny(g_srcImage, g_tempImage, 200, 400);
+    cvtColor(g_tempImage, g_dstImage, CV_GRAY2BGR);
+    on_HoughLines(g_nthreshold, 0);
+//    HoughLinesP(g_tempImage, g_lines, 1, CV_PI/180, 80, 50, 10);
+//    imshow("HoughLines", g_dstImage);
+    
+    // Hough Cercle
+    namedWindow("HoughCercles");
+    Mat cercleImage = g_srcImage.clone();
+    cvtColor(cercleImage, cercleImage, CV_BGR2GRAY);
+    GaussianBlur(cercleImage, cercleImage, Size(3,3), 2,2);
+    vector<Vec3f> circles;
+    HoughCircles(cercleImage, circles, CV_HOUGH_GRADIENT, 1.5, 10);
+    for(size_t i = 0; i < circles.size();i++){
+        Point center(cvRound(circles[i][0]),cvRound(circles[i][1]));
+        int rayon = cvRound(circles[i][2]);
+        circle(cercleImage, center, 3, Scalar(0,255,0),-1);
+        circle(cercleImage, center, rayon, Scalar(0,200,100), 3);
+    }
+    imshow("HoughCercles", cercleImage);
+
+    while(1){
+        int c;
+        c=waitKey(0);
+        if((char)c=='q'||(char)c==27)
+            break;
+    }
+    */
+    
+    // 
+    
+    
     return 0;
 }

@@ -29,7 +29,10 @@ extern int g_nElementSize;
 extern int g_nErodeDilate, g_nOpenClose, g_nTopBlackHat;
 extern int g_SwitchOpenClose, g_SwitchTopBlackHat, g_SwitchErodeDilate;
 extern int g_nElementType;
+extern int g_nthreshold;
 
-extern Mat g_srcImage, g_dstImage;
+extern Mat g_srcImage, g_dstImage, g_tempImage;
+
+extern vector<Vec4i> g_lines;
 
 #endif /* global_hpp */

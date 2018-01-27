@@ -24,4 +24,6 @@ int g_SwitchOpenClose = 0;
 int g_SwitchTopBlackHat = 0;
 int g_SwitchErodeDilate = 0;
 int g_nElementType = 0;
-Mat g_srcImage, g_dstImage;
+int g_nthreshold = 0;
+Mat g_srcImage, g_dstImage, g_tempImage;
+vector<Vec4i> g_lines;
