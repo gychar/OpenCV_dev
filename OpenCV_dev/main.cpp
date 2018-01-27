@@ -13,13 +13,14 @@
 #include "global.hpp"
 #include "Filter.hpp"
 #include "Morphology.hpp"
+#include "Pyramide.hpp"
 
 using namespace std;
 using namespace cv;
 
 int main(){
     
-    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/dota2.jpg");
+    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/yyf.jpg");
     g_dstImage=Mat::zeros(g_srcImage.size(), g_srcImage.type());
     
     /*    import image
@@ -103,26 +104,26 @@ int main(){
     on_SwitchTopBlackHat(g_SwitchTopBlackHat, 0);
 
     while(1){
-    int c;
+        int c;
 
-    on_ErodeDilate(g_nErodeDilate, 0);
-    on_OpenClose(g_nOpenClose, 0);
-    on_TopBlackHat(g_nTopBlackHat, 0);
+        on_ErodeDilate(g_nErodeDilate, 0);
+        on_OpenClose(g_nOpenClose, 0);
+        on_TopBlackHat(g_nTopBlackHat, 0);
 
-    c=waitKey(0);
-    if((char)c=='q'||(char)c==27)
-    break;
-    if((char)c=='r') // R
-    g_nElementType=MORPH_RECT;
-    else if((char)c=='e') // E
-    g_nElementType=MORPH_ELLIPSE;
-    else if((char)c=='c') // C
-    g_nElementType=MORPH_CROSS;
+        c=waitKey(0);
+        if((char)c=='q'||(char)c==27)
+        break;
+        if((char)c=='r') // R
+        g_nElementType=MORPH_RECT;
+        else if((char)c=='e') // E
+        g_nElementType=MORPH_ELLIPSE;
+        else if((char)c=='c') // C
+        g_nElementType=MORPH_CROSS;
     }
     */
     
-    // Edge Detection
-    
+    /* Edge Detection
+
     // Canny
     Mat cannytest = g_srcImage;
     Mat canny_dst, gray, edge;
@@ -135,7 +136,7 @@ int main(){
     imshow("Canny2", canny_dst);
     Canny(g_srcImage, cannytest, 80, 150);
     imshow("Canny", cannytest);
-    
+
     // Sobel
     Mat grad_x, grad_y;
     Mat abs_grad_x, abs_grad_y, sobel_dst;
@@ -145,7 +146,7 @@ int main(){
     convertScaleAbs(grad_y, abs_grad_y);
     addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, sobel_dst);
     imshow("Sobel", sobel_dst);
-    
+
     // Laplace
     Mat laplace_dst, laplace_abs;
     GaussianBlur(g_srcImage, laplace_dst, Size(3,3), 0, 0);
@@ -153,7 +154,7 @@ int main(){
     Laplacian(laplace_dst, laplace_dst, g_srcImage.depth(), 3, 1, 0);
     convertScaleAbs(laplace_dst, laplace_abs);
     imshow("Laplace", laplace_abs);
-    
+
     // Scharr ( Sobel size=3)
     Mat scharr_grad_x, scharr_grad_y, scharr_dst;
     Scharr(g_srcImage, scharr_grad_x, g_srcImage.depth(), 1, 0);
@@ -162,13 +163,48 @@ int main(){
     convertScaleAbs(scharr_grad_y, scharr_grad_y);
     addWeighted(scharr_grad_x, 0.5, scharr_grad_y, 0.5, 0, scharr_dst);
     imshow("Scharr", scharr_dst);
+     
+     while(1){
+     int c;
+     c=waitKey(0);
+     if((char)c=='q'||(char)c==27)
+     break;
+     }
+    */
     
+    // Pyramide
+    Affichage_Pyramide();
+    Mat temp_image = g_srcImage;
     while(1){
         int c;
-        c=waitKey(0);
-        if((char)c=='q'||(char)c==27)
-        break;
+        c=waitKey(1);
+        switch (c) {
+            case 27:
+                return 0;
+                break;
+                
+            case 'z':
+                resize(temp_image, temp_image, Size(), 2, 2);
+                cout<<"Zoom in by Resize *2"<<endl;
+                break;
+                
+            case 's':
+                resize(temp_image, temp_image, Size(), 0.5, 0.5);
+                cout<<"Zoom out by Resize /2"<<endl;
+                break;
+            
+            case 'q':
+                pyrUp(temp_image, temp_image, Size(temp_image.cols*2,temp_image.rows*2));
+                cout<<"Zoom in by PyrUp *2"<<endl;
+                break;
+                
+            case 'd':
+                pyrDown(temp_image, temp_image, Size(temp_image.cols/2,temp_image.rows/2));
+                cout<<"Zoom out by PyrDown /2"<<endl;
+                break;
+        }
+        imshow("Zoom", temp_image);
     }
-    
+
     return 0;
 }

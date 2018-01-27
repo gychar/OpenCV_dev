@@ -53,6 +53,7 @@
 		6AD3AE2E201BDB750031097C /* global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE2C201BDB750031097C /* global.cpp */; };
 		6AD3AE34201BE0830031097C /* Morphology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE32201BE0830031097C /* Morphology.cpp */; };
 		6AD3AE37201BE5430031097C /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE35201BE5430031097C /* Filter.cpp */; };
+		6AD3AE3A201CD30D0031097C /* Pyramide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE38201CD30D0031097C /* Pyramide.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -118,6 +119,8 @@
 		6AD3AE33201BE0830031097C /* Morphology.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Morphology.hpp; sourceTree = "<group>"; };
 		6AD3AE35201BE5430031097C /* Filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
 		6AD3AE36201BE5430031097C /* Filter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Filter.hpp; sourceTree = "<group>"; };
+		6AD3AE38201CD30D0031097C /* Pyramide.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Pyramide.cpp; sourceTree = "<group>"; };
+		6AD3AE39201CD30D0031097C /* Pyramide.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Pyramide.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +197,8 @@
 			isa = PBXGroup;
 			children = (
 				6AD3ADC6201B66EC0031097C /* main.cpp */,
+				6AD3AE38201CD30D0031097C /* Pyramide.cpp */,
+				6AD3AE39201CD30D0031097C /* Pyramide.hpp */,
 				6AD3AE35201BE5430031097C /* Filter.cpp */,
 				6AD3AE36201BE5430031097C /* Filter.hpp */,
 				6AD3AE32201BE0830031097C /* Morphology.cpp */,
@@ -312,6 +317,7 @@
 			files = (
 				6AD3AE2E201BDB750031097C /* global.cpp in Sources */,
 				6AD3AE37201BE5430031097C /* Filter.cpp in Sources */,
+				6AD3AE3A201CD30D0031097C /* Pyramide.cpp in Sources */,
 				6AD3AE34201BE0830031097C /* Morphology.cpp in Sources */,
 				6AD3ADC7201B66EC0031097C /* main.cpp in Sources */,
 			);
