@@ -25,5 +25,14 @@ int g_SwitchTopBlackHat = 0;
 int g_SwitchErodeDilate = 0;
 int g_nElementType = 0;
 int g_nthreshold = 0;
-Mat g_srcImage, g_dstImage, g_tempImage;
+int g_nFillMode = 1;
+int g_nLowDiff = 20;
+int g_nUpDiff = 20;
+int g_nConnectivity = 4;
+int g_nNewMaskVal = 255;
+
+bool g_bIsColor = true;
+bool g_bUseMask = false;
+
+Mat g_srcImage, g_dstImage, g_tempImage, g_maskImage, g_grayImage;
 vector<Vec4i> g_lines;

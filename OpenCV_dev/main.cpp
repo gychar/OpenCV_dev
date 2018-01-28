@@ -15,13 +15,14 @@
 #include "Morphology.hpp"
 #include "Pyramide.hpp"
 #include "Hough.hpp"
+#include "Floodfill.hpp"
 
 using namespace std;
 using namespace cv;
 
 int main(){
     
-    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/china.jpg");
+    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/dota2.jpg");
     g_dstImage=Mat::zeros(g_srcImage.size(), g_srcImage.type());
     
     /*    import image
@@ -240,8 +241,102 @@ int main(){
     }
     */
     
-    // 
+    // FloodFill
+    Affichage_Floodfill();
     
+    g_srcImage.copyTo(g_dstImage);
+    cvtColor(g_dstImage, g_grayImage, CV_BGR2GRAY);
+    g_maskImage.create(g_dstImage.rows+2, g_dstImage.cols+2, CV_8UC1);
+    
+    namedWindow("Result", CV_WINDOW_AUTOSIZE);
+    
+    createTrackbar("Low Difference", "Result", &g_nLowDiff, 255, 0);
+    createTrackbar("Up Difference", "Result", &g_nUpDiff, 255, 0);
+    
+    setMouseCallback("Result", onMouse, 0);
+    
+    while(1){
+        imshow("Result", g_bIsColor ? g_dstImage : g_grayImage);
+        
+        int c = waitKey(0);
+        
+        if((char)c == 27){
+            break;
+        }
+        
+        switch((char)c){
+            case 'a':
+                if(g_bIsColor){
+                    cout<<"A pressed, switch color to gray"<<endl;
+                    cvtColor(g_srcImage, g_grayImage, CV_BGR2GRAY);
+                    g_maskImage = Scalar::all(0);
+                    g_bIsColor = false;
+                }
+                else{
+                    cout<<"A pressed, switch gray to color"<<endl;
+                    g_srcImage.copyTo(g_dstImage);
+                    g_maskImage = Scalar::all(0);
+                    g_bIsColor = true;
+                }
+                break;
+                
+            case 'z':
+                if(g_bUseMask){
+                    destroyWindow("mask");
+                    g_bUseMask = false;
+                }
+                else{
+                    namedWindow("mask");
+                    g_maskImage = Scalar::all(0);
+                    imshow("mask", g_maskImage);
+                    g_bUseMask = true;
+                }
+                
+            case 'e':
+                cout<<"E pressed, reset image"<<endl;
+                g_srcImage.copyTo(g_dstImage);
+                cvtColor(g_dstImage, g_grayImage, COLOR_BGR2GRAY);
+                g_maskImage = Scalar::all(0);
+                break;
+                
+            case 'r':
+                cout<<"R pressed, use null-range floodfill."<<endl;
+                g_nFillMode = 0;
+                break;
+                
+            case 't':
+                cout<<"T pressed, use fixed-range floodfill."<<endl;
+                g_nFillMode = 1;
+                break;
+                
+            case 'y':
+                cout<<"Y pressed, use floated-range floodfill."<<endl;
+                g_nFillMode = 2;
+                break;
+                
+            case 'u':
+                cout<<"U pressed, 4-connected."<<endl;
+                g_nConnectivity = 4;
+                break;
+                
+            case 'i':
+                cout<<"I pressed, 8-connected."<<endl;
+                g_nConnectivity = 8;
+                break;
+        }
+        
+    }
     
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -30,8 +30,14 @@ extern int g_nErodeDilate, g_nOpenClose, g_nTopBlackHat;
 extern int g_SwitchOpenClose, g_SwitchTopBlackHat, g_SwitchErodeDilate;
 extern int g_nElementType;
 extern int g_nthreshold;
+extern int g_nFillMode;
+extern int g_nLowDiff, g_nUpDiff;
+extern int g_nConnectivity;
+extern int g_nNewMaskVal;
 
-extern Mat g_srcImage, g_dstImage, g_tempImage;
+extern bool g_bIsColor, g_bUseMask;
+
+extern Mat g_srcImage, g_dstImage, g_tempImage, g_maskImage, g_grayImage;
 
 extern vector<Vec4i> g_lines;
 
