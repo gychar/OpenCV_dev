@@ -16,13 +16,14 @@
 #include "Pyramide.hpp"
 #include "Hough.hpp"
 #include "Floodfill.hpp"
+#include "HarrisCorner.hpp"
 
 using namespace std;
 using namespace cv;
 
 int main(){
     
-    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/dota2.jpg");
+    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/house.jpg");
     g_dstImage=Mat::zeros(g_srcImage.size(), g_srcImage.type());
     
     /*    import image
@@ -241,7 +242,7 @@ int main(){
     }
     */
     
-    // FloodFill
+    /* FloodFill
     Affichage_Floodfill();
     
     g_srcImage.copyTo(g_dstImage);
@@ -324,7 +325,20 @@ int main(){
                 g_nConnectivity = 8;
                 break;
         }
-        
+    }
+    */
+    
+    // Harris Corner
+    namedWindow("WIN1");
+    namedWindow("WIN2");
+    g_nHarrisMaxVal = 175;
+    createTrackbar("Threshold", "WIN1", &g_nHarrisThresh, g_nHarrisMaxVal, on_HarrisCorner);
+    on_HarrisCorner(g_nHarrisThresh, 0);
+    while(1){
+        int c;
+        c=waitKey(0);
+        if((char)c=='q'||(char)c==27)
+            break;
     }
     
     return 0;

@@ -30,6 +30,8 @@ int g_nLowDiff = 20;
 int g_nUpDiff = 20;
 int g_nConnectivity = 4;
 int g_nNewMaskVal = 255;
+int g_nHarrisThresh = 100;
+int g_nHarrisMaxVal = 0;
 
 bool g_bIsColor = true;
 bool g_bUseMask = false;

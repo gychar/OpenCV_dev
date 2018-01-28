@@ -34,6 +34,7 @@ extern int g_nFillMode;
 extern int g_nLowDiff, g_nUpDiff;
 extern int g_nConnectivity;
 extern int g_nNewMaskVal;
+extern int g_nHarrisThresh, g_nHarrisMaxVal;
 
 extern bool g_bIsColor, g_bUseMask;
 
