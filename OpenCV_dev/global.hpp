@@ -39,7 +39,10 @@ extern int g_nHarrisThresh, g_nHarrisMaxVal;
 extern bool g_bIsColor, g_bUseMask;
 
 extern Mat g_srcImage, g_dstImage, g_tempImage, g_maskImage, g_grayImage;
+extern Mat g_map_x, g_map_y;
 
 extern vector<Vec4i> g_lines;
+
+string type2str(int type);
 
 #endif /* global_hpp */

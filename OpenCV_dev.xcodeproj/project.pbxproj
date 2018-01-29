@@ -57,6 +57,7 @@
 		6AD3AE3D201D2DEB0031097C /* Hough.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE3B201D2DEB0031097C /* Hough.cpp */; };
 		6AD3AE40201DFF930031097C /* Floodfill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE3E201DFF930031097C /* Floodfill.cpp */; };
 		6AD3AE43201E42CC0031097C /* HarrisCorner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE41201E42CC0031097C /* HarrisCorner.cpp */; };
+		6AD3AE46201E925D0031097C /* RemapFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3AE44201E925D0031097C /* RemapFunction.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -130,6 +131,8 @@
 		6AD3AE3F201DFF930031097C /* Floodfill.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Floodfill.hpp; sourceTree = "<group>"; };
 		6AD3AE41201E42CC0031097C /* HarrisCorner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HarrisCorner.cpp; sourceTree = "<group>"; };
 		6AD3AE42201E42CC0031097C /* HarrisCorner.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HarrisCorner.hpp; sourceTree = "<group>"; };
+		6AD3AE44201E925D0031097C /* RemapFunction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RemapFunction.cpp; sourceTree = "<group>"; };
+		6AD3AE45201E925D0031097C /* RemapFunction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RemapFunction.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +209,8 @@
 			isa = PBXGroup;
 			children = (
 				6AD3ADC6201B66EC0031097C /* main.cpp */,
+				6AD3AE44201E925D0031097C /* RemapFunction.cpp */,
+				6AD3AE45201E925D0031097C /* RemapFunction.hpp */,
 				6AD3AE41201E42CC0031097C /* HarrisCorner.cpp */,
 				6AD3AE42201E42CC0031097C /* HarrisCorner.hpp */,
 				6AD3AE3E201DFF930031097C /* Floodfill.cpp */,
@@ -332,6 +337,7 @@
 			files = (
 				6AD3AE2E201BDB750031097C /* global.cpp in Sources */,
 				6AD3AE37201BE5430031097C /* Filter.cpp in Sources */,
+				6AD3AE46201E925D0031097C /* RemapFunction.cpp in Sources */,
 				6AD3AE40201DFF930031097C /* Floodfill.cpp in Sources */,
 				6AD3AE43201E42CC0031097C /* HarrisCorner.cpp in Sources */,
 				6AD3AE3A201CD30D0031097C /* Pyramide.cpp in Sources */,

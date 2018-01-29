@@ -17,13 +17,14 @@
 #include "Hough.hpp"
 #include "Floodfill.hpp"
 #include "HarrisCorner.hpp"
+#include "RemapFunction.hpp"
 
 using namespace std;
 using namespace cv;
 
 int main(){
     
-    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/house.jpg");
+    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/yyf.jpg");
     g_dstImage=Mat::zeros(g_srcImage.size(), g_srcImage.type());
     
     /*    import image
@@ -328,7 +329,7 @@ int main(){
     }
     */
     
-    // Harris Corner
+    /* Harris Corner
     namedWindow("WIN1");
     namedWindow("WIN2");
     g_nHarrisMaxVal = 175;
@@ -340,7 +341,29 @@ int main(){
         if((char)c=='q'||(char)c==27)
             break;
     }
+    */
     
+    // Remap function
+    g_srcImage.convertTo(g_srcImage, CV_32FC1 , 1.0/255.0);
+    g_dstImage.create( g_srcImage.size(), g_srcImage.type() );
+    g_map_x.create( g_srcImage.size(), CV_32FC1 );
+    g_map_y.create( g_srcImage.size(), CV_32FC1 );
+    Mat src = g_srcImage;
+    namedWindow("Remap");
+    imshow("Remap", g_srcImage);
+    g_srcImage.copyTo(g_dstImage);
+    while(1){
+        int c = waitKey(0);
+        if((char)c=='q'||(char)c==27)
+            break;
+        update_map(c);
+        remap(g_dstImage, g_dstImage, g_map_x, g_map_y, INTER_LINEAR, BORDER_CONSTANT, Scalar(0,0,0));
+        imshow("Remap", g_dstImage);
+        
+    }
+    waitKey(0);
+    string t = type2str(g_srcImage.type());
+    cout<<"CV"<<t<<endl;
     return 0;
 }
 
