@@ -364,6 +364,9 @@ int main(){
     waitKey(0);
     string t = type2str(g_srcImage.type());
     cout<<"CV"<<t<<endl;
+    
+    
+    
     return 0;
 }
 
