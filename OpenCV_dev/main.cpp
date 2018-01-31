@@ -10,6 +10,17 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/core/core.hpp>
+
+//#include "opencv2/core/utility.hpp"
+//#include "opencv2/core/ocl.hpp"
+//#include "opencv2/imgcodecs.hpp"
+#include "opencv2/features2d.hpp"
+//#include "opencv2/calib3d.hpp"
+//#include "opencv2/imgproc.hpp"
+//#include"opencv2/flann.hpp"
+#include"opencv2/xfeatures2d.hpp"
+//#include"opencv2/ml.hpp"
+
 #include "global.hpp"
 #include "Filter.hpp"
 #include "Morphology.hpp"
@@ -22,9 +33,12 @@
 using namespace std;
 using namespace cv;
 
+using namespace cv::xfeatures2d;
+//using namespace cv::ml;
+
 int main(){
     
-    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/yyf.jpg");
+    g_srcImage=imread("/Users/char/Documents/学习/OpenCV/测试图/china.jpg");
     g_dstImage=Mat::zeros(g_srcImage.size(), g_srcImage.type());
     
     /*    import image
@@ -343,7 +357,7 @@ int main(){
     }
     */
     
-    // Remap function
+    /* Remap function
     g_srcImage.convertTo(g_srcImage, CV_32FC1 , 1.0/255.0);
     g_dstImage.create( g_srcImage.size(), g_srcImage.type() );
     g_map_x.create( g_srcImage.size(), CV_32FC1 );
@@ -364,8 +378,104 @@ int main(){
     waitKey(0);
     string t = type2str(g_srcImage.type());
     cout<<"CV"<<t<<endl;
+     */
     
+    /* Affine transformation
+    // Initialization
+    Mat rotMat, warpMat, dst_warp, dst_warp_rotate;
+    dst_warp =  Mat::zeros(g_srcImage.size(), g_srcImage.type());
+    Point2f srcTriangle[3];
+    Point2f dstTriangle[3];
+    namedWindow("Warp");
+    namedWindow("Warp - Rotate");
+    // Affine transform
+    srcTriangle[0] = Point2f(0, 0);    // top left
+    srcTriangle[1] = Point2f(static_cast<float>(g_srcImage.cols-1), 0);     // top right
+    srcTriangle[2] = Point2f(0, static_cast<float>(g_srcImage.rows-1));     // bot left
+    dstTriangle[0] = Point2f(static_cast<float>(g_srcImage.cols*0), static_cast<float>(g_srcImage.rows*0.33));
+    dstTriangle[1] = Point2f(static_cast<float>(g_srcImage.cols*0.65), static_cast<float>(g_srcImage.rows*0.35));
+    dstTriangle[2] = Point2f(static_cast<float>(g_srcImage.cols*0.15), static_cast<float>(g_srcImage.rows*0.6));
+    // Get affine transform
+    warpMat = getAffineTransform(srcTriangle, dstTriangle);
+    // Apply affine transform
+    warpAffine(g_srcImage, dst_warp, warpMat, dst_warp.size());
+    // Rotate
+    Point center = Point(dst_warp.cols/2, dst_warp.rows/2);
+    double angle = -50;
+    double scale = 0.7;
+    rotMat = getRotationMatrix2D(center, angle, scale);
+    warpAffine(dst_warp, dst_warp_rotate, rotMat, dst_warp_rotate.size());
+    imshow("Warp", dst_warp);
+    imshow("Warp - Rotate", dst_warp_rotate);
     
+    while(1){
+        int c;
+        c=waitKey(0);
+        if((char)c=='q'||(char)c==27)
+            break;
+    }
+    */
+
+    // Surf function
+    // Initialization
+    Mat src01 = imread("/Users/char/Documents/学习/OpenCV/测试图/palma1.jpg");
+    Mat src02 = imread("/Users/char/Documents/学习/OpenCV/测试图/palma2.jpg");
+    Mat src1, src2;
+
+    string t;
+    t = type2str(src1.type());
+    cout<<"CV"<<t<<endl;
+    cvtColor(src01, src1, CV_BGR2GRAY);
+    cvtColor(src02, src2, CV_BGR2GRAY);
+    Mat dst1, dst2;
+    Ptr<SURF> surf;
+//    BFMatcher matcher;
+    FlannBasedMatcher matcher;
+    Mat descriptor1, descriptor2;
+    vector<KeyPoint> keypoint1, keypoint2;
+    vector<DMatch> matches;
+    namedWindow("1");
+    namedWindow("2");
+    namedWindow("Surf Match");
+    // set Hessain parameter
+    int minHessian = 2000;
+    surf = SURF::create(minHessian);
+    surf->detectAndCompute(src1, Mat(), keypoint1, descriptor1);
+    surf->detectAndCompute(src2, Mat(), keypoint2, descriptor2);
+    drawKeypoints(src1, keypoint1, dst1);
+    drawKeypoints(src2, keypoint2, dst2);
+    // Match
+    matcher.match(descriptor1, descriptor2, matches);
+    vector<vector<DMatch> > matchePoints;
+    vector<DMatch> GoodMatchePoints;
+    
+    vector<Mat> train_desc(1, descriptor1);
+    matcher.add(train_desc);
+    matcher.train();
+    
+    matcher.knnMatch(descriptor2, matchePoints, 2);
+    cout << "total match points: " << matchePoints.size() << endl;
+    
+    // Lowe's algorithm,获取优秀匹配点
+    for (int i = 0; i < matchePoints.size(); i++)
+    {
+        if (matchePoints[i][0].distance < 0.6 * matchePoints[i][1].distance)
+        {
+            GoodMatchePoints.push_back(matchePoints[i][0]);
+        }
+    }
+    Mat dstimg;
+    drawMatches(src1, keypoint2, src2, keypoint2, GoodMatchePoints, dstimg);
+    imshow("Surf Match", dstimg);
+    imwrite("/Users/char/Documents/学习/OpenCV/测试图/surf_palma.jpg", dstimg);
+    
+
+    while(1){
+        int c;
+        c=waitKey(0);
+        if((char)c=='q'||(char)c==27)
+            break;
+    }
     
     return 0;
 }
